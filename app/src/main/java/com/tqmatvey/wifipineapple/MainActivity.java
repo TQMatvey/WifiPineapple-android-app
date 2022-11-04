@@ -15,6 +15,17 @@ public class MainActivity extends AppCompatActivity {
 
     private WebView webView;
 
+    public boolean isConnectedToPineapple() {
+        Runtime runtime = Runtime.getRuntime();
+        try {
+            Process ipProcess = runtime.exec("/system/bin/ping -c 1 172.16.42.1");
+            int     exitValue = ipProcess.waitFor();
+            return (exitValue == 0);
+        } catch (java.io.IOException e)          { e.printStackTrace(); }
+        catch (InterruptedException e) { e.printStackTrace(); }
+        return false;
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,7 +41,10 @@ public class MainActivity extends AppCompatActivity {
         webView.setWebViewClient(client);
         WebSettings settings = webView.getSettings();
         setupWebViewSettings(webView, true);
-        webView.loadUrl("http://172.16.42.1:1471/");
+        if(isConnectedToPineapple()){
+            webView.loadUrl("http://172.16.42.1:1471/");
+        }
+        // webView.loadUrl("http://172.16.42.1:1471/");
     }
 
     public void setupWebViewSettings(WebView webView,boolean DesktopMode) {
@@ -50,6 +64,8 @@ public class MainActivity extends AppCompatActivity {
         webView.setInitialScale(1);
         webView.getSettings().setJavaScriptEnabled(true);
         webView.getSettings().setDomStorageEnabled(true);
+        webView.getSettings().setBuiltInZoomControls(true);
+        webView.getSettings().setDisplayZoomControls(false);
         webView.getSettings().setUseWideViewPort(DesktopMode);
         webView.getSettings().setLoadWithOverviewMode(DesktopMode);
         webView.reload();
@@ -70,7 +86,7 @@ class CustomWebViewClient extends WebViewClient{
 
     @Override
     public void onLoadResource(WebView view, String url) {
-        view.evaluateJavascript("document.querySelector('meta[name=\"viewport\"]').setAttribute('content', 'width=712, initial-scale=' + (document.documentElement.clientWidth / 712));", null);
+        view.evaluateJavascript("document.querySelector('meta[name=\"viewport\"]').setAttribute('content', 'width=1024, initial-scale=' + (document.documentElement.clientWidth / 1));", null);
     }
 
     public CustomWebViewClient(Activity activity){

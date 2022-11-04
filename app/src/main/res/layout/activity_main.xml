@@ -3,9 +3,18 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <Button
+        android:id="@+id/button4"
+        android:layout_width="130dp"
+        android:layout_height="50dp"
+        android:layout_centerHorizontal="true"
+        android:layout_centerInParent="true"
+        android:text="Refresh" />
+    
     <WebView
         android:id="@+id/webView"
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent"/>
+        android:layout_height="fill_parent">
+    </WebView>
 
 </RelativeLayout>
