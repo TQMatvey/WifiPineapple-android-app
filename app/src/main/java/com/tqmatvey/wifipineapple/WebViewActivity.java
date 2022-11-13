@@ -17,36 +17,23 @@ public class WebViewActivity extends AppCompatActivity {
 
     private WebView webView;
 
-    public boolean isConnectedToPineapple() {
-        Runtime runtime = Runtime.getRuntime();
-        try {
-            Process ipProcess = runtime.exec("/system/bin/ping -c 1 172.16.42.1");
-            int     exitValue = ipProcess.waitFor();
-            return (exitValue == 0);
-        } catch (java.io.IOException e)          { e.printStackTrace(); }
-        catch (InterruptedException e) { e.printStackTrace(); }
-        return false;
-    }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.web_view_activity);
+        Intent isConnectedIntent = new Intent();
 
-        initializeWebView();
+        initializeWebView(isConnectedIntent);
     }
 
-    public void initializeWebView(){
+    public void initializeWebView(Intent isConnectedIntent){
         CustomWebViewClient client = new CustomWebViewClient(this);
         //webView.getSettings().setDomStorageEnabled(true);
         WebView webView = (WebView) findViewById(R.id.webView);
         webView.setWebViewClient(client);
         WebSettings settings = webView.getSettings();
         setupWebViewSettings(webView, true);
-        if(isConnectedToPineapple()){
-            webView.loadUrl("http://172.16.42.1:1471/");
-        }
-        // webView.loadUrl("http://172.16.42.1:1471/");
+        webView.loadUrl("http://172.16.42.1:1471/");
     }
 
     public void setupWebViewSettings(WebView webView,boolean DesktopMode) {
