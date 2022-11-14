@@ -12,4 +12,14 @@
         android:onClick="WebViewActivity"
         android:text="Connect" />
 
+    <com.google.android.material.progressindicator.CircularProgressIndicator
+        android:id="@+id/loading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/button1"
+        android:layout_marginTop="@android:dimen/app_icon_size"
+        android:indeterminate="true"
+        android:visibility="invisible"/>
+
 </RelativeLayout>
