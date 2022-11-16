@@ -63,6 +63,7 @@ public class WebViewActivity extends AppCompatActivity {
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event){
         if(keyCode == KeyEvent.KEYCODE_BACK && this.webView.canGoBack()){
+            // TODO: android.webkit.WebView.canGoBack() goto MainActivity
             this.webView.goBack();
             return true;
         }

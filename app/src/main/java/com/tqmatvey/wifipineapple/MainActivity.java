@@ -3,20 +3,12 @@ package com.tqmatvey.wifipineapple;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ProgressBar;
+import android.widget.Switch;
 import android.widget.Toast;
 
-import com.google.android.material.progressindicator.CircularProgressIndicator;
-import com.spectrum.android.ping.Ping;
-
-import java.net.Inet4Address;
-import java.net.InetAddress;
-import java.util.concurrent.ExecutionException;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 
@@ -47,13 +39,17 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Button button1 = (Button) findViewById(R.id.button1);
+        Switch forceConnectSwitch = (Switch) findViewById(R.id.switch1);
         //CircularProgressIndicator loading = (CircularProgressIndicator) findViewById(R.id.loading);
         button1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(view.getContext(), WebViewActivity.class);
+                Boolean forceConnectSwitchState = forceConnectSwitch.isChecked();
                 // loading.setVisibility(View.VISIBLE);
-                if(isConnectedToPineapple()) {
+                if(forceConnectSwitchState){
+                    view.getContext().startActivity(intent);
+                } else if(isConnectedToPineapple()) {
                     view.getContext().startActivity(intent);
                 } else{
                     Toast.makeText(getApplicationContext(), "Please connect to Wifi Pineapple AP", Toast.LENGTH_LONG).show();
