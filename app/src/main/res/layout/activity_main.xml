@@ -12,14 +12,13 @@
         android:onClick="WebViewActivity"
         android:text="Connect" />
 
-    <Switch
+    <androidx.appcompat.widget.SwitchCompat
         android:id="@+id/switch1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_above="@id/button1"
-        android:layout_marginBottom="48dp"
-        android:checked="false"
-        android:text="Force Connect" />
+        android:layout_marginBottom="20dp"
+        android:text="Force Connect"/>
 
 </RelativeLayout>
