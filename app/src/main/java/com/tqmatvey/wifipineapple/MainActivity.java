@@ -15,24 +15,15 @@ import java.util.concurrent.atomic.AtomicBoolean;
 public class MainActivity extends AppCompatActivity {
     public Boolean isConnectedToPineapple()
     {
-        final AtomicBoolean b = new AtomicBoolean(false);
-         Thread thread = new Thread(new Runnable() {    // if we remove this line, ANR error
-            @Override
-            public void run() {
-                Runtime runtime = Runtime.getRuntime();
-                try {
-                    Process ipProcess = runtime.exec("/system/bin/ping -c 1 172.16.42.1");
-                    int     exitValue = ipProcess.waitFor();
-                    b.set(exitValue == 0);
-                } catch (java.io.IOException e)          { e.printStackTrace(); }
-                catch (InterruptedException e) { e.printStackTrace(); }
-                b.set(false);
-            }
-        });
-
-        thread.start(); // launching thread
-        //try { thread.join(); } catch (InterruptedException e) { e.printStackTrace(); } // wait for thread to complete
-        return b.get();
+        boolean connected = false;
+        Runtime runtime = Runtime.getRuntime();
+        try {
+            Process ipProcess = runtime.exec("/system/bin/ping -W 1 -c 1 172.16.42.1");
+            int     exitValue = ipProcess.waitFor();
+            return exitValue == 0;
+        } catch (java.io.IOException e){ e.printStackTrace(); }
+        catch (InterruptedException e) { e.printStackTrace(); }
+        return false;
     }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
